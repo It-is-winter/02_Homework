@@ -20,17 +20,19 @@ public class OrderDto {
     public OrderDto() {
 		super();
 	}
-	public OrderDto(int orderNo, int quantity, Date orderDate, String status, String memberName, String restName,
-			String menuName, int price) {
+	public OrderDto(int memberNo, int menuNo, int quantity) {
+		super();
+		this.memberNo = memberNo;
+		this.menuNo = menuNo;
+		this.quantity = quantity;
+	}
+	public OrderDto(int orderNo, int quantity, String status, String restName, String menuName) {
 		super();
 		this.orderNo = orderNo;
 		this.quantity = quantity;
-		this.orderDate = orderDate;
 		this.status = status;
-		this.memberName = memberName;
 		this.restName = restName;
 		this.menuName = menuName;
-		this.price = price;
 	}
 	public OrderDto(int orderNo, int memberNo, int menuNo, int quantity, Date orderDate, String status,
 			String memberName, String restName, String menuName, int price) {
