@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="memberMapper">
+  	<select id="validateId" resultType="int" parameterType="string">
+  		SELECT 
+  		       COUNT(MEMBER_ID)
+  		  FROM 
+  		       DELI_MEMBER
+  		 WHERE 
+  		       MEMBER_ID = #{memberId}
+  	</select>
+  	<insert id="signUp" parameterType="deliMember">
+  		INSERT 
+  		  INTO 
+  		  	   DELI_MEMBER
+  		  	   (
+  		  	   MEMBER_NO
+  		  	 , MEMBER_ID
+  		  	 , MEMBER_PW
+  		  	 , MEMBER_NAME
+  		  	 , ADDRESS
+  		  	   )
+  		VALUES 
+  			   (
+  			   SEQ_MEMBER_NO.NEXTVAL
+  			 , #{memberId}
+  			 , #{memberPw}
+  			 , #{memberName}
+  			 , #{address}
+  			   )
+  	</insert>
+  	<select id="logIn" resultType="deliMember" parameterType="deliMember">
+  		SELECT 
+  		       MEMBER_NO
+  		     , MEMBER_NAME
+  		  FROM 
+  		       DELI_MEMBER
+  		 WHERE 
+  		       MEMBER_NO = (
+  		       				SELECT 
+  		       				       MEMBER_NO
+  		       				  FROM 
+  		       				       DELI_MEMBER
+  		       				 WHERE 
+  		       				       MEMBER_ID = #{memberId}
+  		       				   AND 
+  		       				       MEMBER_PW = #{memberPw}
+  		       			   )
+  	</select>
+  	<select id="memberById" resultType="deliMember" parameterType="string">
+  		SELECT 
+  		       MEMBER_NO
+  		  FROM 
+  		       DELI_MEMBER
+  		 WHERE 
+  		       MEMBER_ID = #{memberId}
+  	</select>
+  </mapper>

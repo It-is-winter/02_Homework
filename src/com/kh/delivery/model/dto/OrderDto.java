@@ -20,9 +20,8 @@ public class OrderDto {
     public OrderDto() {
 		super();
 	}
-	public OrderDto(int memberNo, int menuNo, int quantity) {
+	public OrderDto(int menuNo, int quantity) {
 		super();
-		this.memberNo = memberNo;
 		this.menuNo = menuNo;
 		this.quantity = quantity;
 	}

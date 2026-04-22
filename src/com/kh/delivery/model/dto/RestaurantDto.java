@@ -9,7 +9,7 @@ public class RestaurantDto {
 	private String category;
 	private int minPrice;
 	private int deliveryFee;
-	private List<MenuDto> menuDtos = new ArrayList();
+	private List<MenuDto> menus = new ArrayList();
 	public RestaurantDto() {
 		super();
 	}
@@ -31,14 +31,14 @@ public class RestaurantDto {
 		this.deliveryFee = deliveryFee;
 	}
 	public RestaurantDto(Integer restNo, String restName, String category, int minPrice, int deliveryFee,
-			List<MenuDto> menuDtos) {
+			List<MenuDto> menus) {
 		super();
 		this.restNo = restNo;
 		this.restName = restName;
 		this.category = category;
 		this.minPrice = minPrice;
 		this.deliveryFee = deliveryFee;
-		this.menuDtos = menuDtos;
+		this.menus = menus;
 	}
 	public Integer getRestNo() {
 		return restNo;
@@ -71,10 +71,10 @@ public class RestaurantDto {
 		this.deliveryFee = deliveryFee;
 	}
 	public List<MenuDto> getMenus() {
-		return menuDtos;
+		return menus;
 	}
-	public void setMenus(List<MenuDto> menuDtos) {
-		this.menuDtos = menuDtos;
+	public void setMenuDtos(List<MenuDto> menus) {
+		this.menus = menus;
 	}
 	@Override
 	public String toString() {

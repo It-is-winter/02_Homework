@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="orderMapper">
+  	<select id="isSoldOutByMenuNo" resultType="menu" parameterType="_int">
+  		SELECT 
+  			   MENU_NO
+  		     , SOLD_OUT
+  		  FROM 
+  		       MENU
+  		 WHERE 
+  		       MENU_NO = #{menuNo}
+  	</select>
+  	<insert id="insertOrder">
+  		INSERT 
+  		  INTO 
+  		       ORDERS
+  		       (
+  		       ORDER_NO
+  		     , MEMBER_NO
+  		     , MENU_NO
+  		     , QUANTITY
+  		       )
+  		VALUES 
+  		       (
+  		       SEQ_ORDER_NO.NEXTVAL
+  		     , #{memberNo}
+  		     , #{menuNo}
+  		     , #{quantity}
+  		       )
+  	</insert>
+  	<select id="selectOrderList" resultType="order" parameterType="_int">
+  		SELECT 
+  			   ORDER_NO
+  			 , QUANTITY
+  			 , STATUS
+  			 , REST_NAME
+  			 , MENU_NAME
+  		  FROM 
+  		       ORDERS O
+  		     , MENU M
+  		     , RESTAURANT R
+  		 WHERE 
+  		 	   MEMBER_NO = #{memberNo}
+  		   AND
+  		       O.MENU_NO = M.MENU_NO
+  		   AND 
+  		       M.REST_NO = R.REST_NO
+  		 ORDER 
+  		    BY 
+  		       ORDER_NO DESC
+  	</select>
+  	<delete id="deleteOrder" parameterType="_int">
+  		DELETE 
+  		  FROM 
+  		 TABLE 
+  		       ORDERS
+  		 WHERE 
+  		       ORDER_NO = #{orderNo}
+  		   AND 
+  		       STATUS = '주문접수'
+  	</delete>
+  </mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="restaurantMapper">
+  	<resultMap id="restaurantAndMenus" type="restaurant">
+  		<id column="REST_NO" property="restNo" />
+  		<result column="REST_NAME" property="restName" />
+  		<result column="CATEGORY" property="category" />
+  		<collection property="menus" ofType="menu">
+  			<id column="MENU_NO" property="menuNo" />
+  			<result column="MENU_NAME" property="menuName" />
+  			<result column="PRICE" property="price" />
+  			<result column="SOLD_OUT" property="soldOut" />
+  		</collection>
+  	</resultMap>
+  	<select id="selectRestaurantList" resultType="restaurant">
+  		SELECT 
+  		       REST_NO
+  		     , REST_NAME
+  		     , CATEGORY
+  		     , MIN_PRICE
+  		     , DELIVERY_FEE
+  		  FROM 
+  		       RESTAURANT
+  		 ORDER 
+  		    BY 
+  		       REST_NO
+  	</select>
+  	<select id="selectRestaurant" resultMap="restaurantAndMenus" parameterType="_int">
+  		SELECT 
+  		       R.REST_NO
+  		     , REST_NAME
+  		     , CATEGORY
+  		     , MENU_NO
+  		     , MENU_NAME
+  		     , PRICE
+  		     , SOLD_OUT
+  		  FROM 
+  		  	   RESTAURANT R
+  		  	 , MENU M
+  		 WHERE 
+  		       R.REST_NO = M.REST_NO
+  		   AND 
+  		       R.REST_NO = #{restNo}
+  	</select>
+  	<select id="selectRestaurantByCategory" resultType="restaurant" parameterType="string">
+  		SELECT 
+  		       REST_NO
+  		     , REST_NAME
+  		     , CATEGORY
+  		     , MIN_PRICE
+  		     , DELIVERY_FEE
+  		  FROM 
+  		       RESTAURANT
+  		 WHERE 
+  		 	<if test="category != null" >
+  		       CATEGORY LIKE '%' || #{category} || '%'
+  		    </if>
+  		 ORDER 
+  		    BY 
+  		       REST_NO
+  	</select>
+  </mapper>
