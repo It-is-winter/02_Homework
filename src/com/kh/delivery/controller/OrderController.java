@@ -13,5 +13,9 @@ public class OrderController {
 	public List<OrderDto> selectOrderList(String memberId) {
 		return new OrderService().selectOrderList(memberId);
 	}
+	
+	public int deleteOrder(int orderNo) {
+		return new OrderService().deleteOrder(orderNo);
+	}
 
 }

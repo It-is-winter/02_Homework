@@ -19,5 +19,9 @@ public class OrderDao {
 	public List<OrderDto> selectOrderList(SqlSession session, int memberNo) {
 		return session.selectList("orderMapper.selectOrderList", memberNo);
 	}
+	
+	public int deleteOrder(SqlSession session, int orderNo) {
+		return session.delete("orderMapper.deleteOrder", orderNo);
+	}
 
 }

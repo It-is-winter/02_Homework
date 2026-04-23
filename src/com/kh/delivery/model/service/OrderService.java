@@ -35,5 +35,16 @@ public class OrderService {
 		session.close();
 		return orders;
 	}
+	
+	public int deleteOrder(int orderNo) {
+		SqlSession session = Template.getSqlSession();
+		int result = new OrderDao().deleteOrder(session, orderNo);
+		if(result > 0) {
+			session.commit();
+		} else {
+			session.rollback();
+		}
+		return result;
+	}
 
 }

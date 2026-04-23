@@ -165,14 +165,14 @@ public class DeliveryMenu {
 			switch(menu) {
 			case "1" : insertOrder(); break;
 			case "2" : selectOrderList(); break;
-			case "3" :
+			case "3" : deleteOrder(); break;
 			case "4" : return;
 				default : System.out.println("해당하는 메뉴번호가 없습니다. 다시 입력해주세요.");
 			}
 		}
 	}
 	
-	public void insertOrder() {
+	private void insertOrder() {
 		System.out.print("아이디를 입력해주세요 >");
 		String memberId = sc.nextLine();
 		selectRestaurant();
@@ -212,7 +212,7 @@ public class DeliveryMenu {
 		}
 	}
 	
-	public void selectOrderList() {
+	private void selectOrderList() {
 		System.out.print("아이디를 입력해주세요 >");
 		String memberId = sc.nextLine();
 		List<OrderDto> orders = orderController.selectOrderList(memberId);
@@ -226,6 +226,28 @@ public class DeliveryMenu {
 			}
 		}
 		System.out.println("-------------------------------------------------------------------------------------------");
+	}
+	
+	private void deleteOrder() {
+		selectOrderList();
+		int orderNo = 0;
+		while(true) {
+			System.out.print("취소하고 싶으신 주문번호를 입력해주세요 >");
+			try {
+				orderNo = sc.nextInt();
+				sc.nextLine();
+				break;
+			} catch(InputMismatchException e) {
+				System.out.println("숫자로 입력해주세요.");
+				sc.nextLine();
+			}
+		}
+		int result = orderController.deleteOrder(orderNo);
+		if(result > 0) {
+			System.out.println("주문이 취소되었습니다.");
+		} else {
+			System.out.println("주문 취소 실패..");
+		}
 	}
 
 }
