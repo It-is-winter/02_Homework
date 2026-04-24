@@ -29,6 +29,7 @@ public class DeliveryMenu {
 			System.out.println("3. 회원가입하기");
 			System.out.println("4. 로그인하기");
 			System.out.println("0. 프로그램 종료");
+			System.out.println();
 			System.out.print("원하시는 메뉴 번호를 입력해주세요 >");
 			String menu = sc.nextLine();
 			
@@ -69,7 +70,7 @@ public class DeliveryMenu {
 		
 		RestaurantDto result = resController.selectRestaurant(resNo);
 		if(result != null) {
-			System.out.println(result.getRestName() + "의 메뉴들");
+			System.out.println("\n" + result.getRestName() + "의 메뉴들");
 			List<MenuDto> menuDtos = result.getMenus();
 			for(MenuDto menuDto : menuDtos) {
 				System.out.println(menuDto);

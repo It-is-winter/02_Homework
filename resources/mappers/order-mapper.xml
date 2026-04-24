@@ -54,7 +54,6 @@
   	<delete id="deleteOrder" parameterType="_int">
   		DELETE 
   		  FROM 
-  		 TABLE 
   		       ORDERS
   		 WHERE 
   		       ORDER_NO = #{orderNo}

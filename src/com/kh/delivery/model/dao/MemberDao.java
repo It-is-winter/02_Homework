@@ -35,6 +35,12 @@ public class MemberDao {
 		return session.selectOne("memberMapper.logIn", member);
 	}
 	
+	/**
+	 * Find member by Id
+	 * @param session
+	 * @param memberId
+	 * @return
+	 */
 	public DeliMemberDto memberById(SqlSession session, String memberId) {
 		return session.selectOne("memberMapper.memberById", memberId);
 	}
