@@ -104,8 +104,8 @@ public class DeliveryMenu {
 		while(true) {
 			System.out.print("아이디를 입력해주세요 >");
 			memberId = sc.nextLine();
-			int result = memberController.validateId(memberId);
-			if(result > 0) {
+			DeliMemberDto member = memberController.validateId(memberId);
+			if(member != null) {
 				System.out.println("해당아이디가 존재합니다. 다른 아이디를 입력해주세요.");
 			} else {
 				System.out.print("비밀번호를 입력해주세요 >");
@@ -131,29 +131,30 @@ public class DeliveryMenu {
 		System.out.println("=====================================================================");
 		System.out.println("\t\t\t로그인서비스입니다.");
 		System.out.println("=====================================================================");
-		DeliMemberDto result = null;
+		int result = 0;
+		String memberId = "";
 		while(true) {
 			System.out.print("아이디를 입력해주세요 >");
-			String memberId = sc.nextLine();
+			memberId = sc.nextLine();
 			System.out.print("비밀번호를 입력해주세요 >");
 			String memberPw = sc.nextLine();
 			
 			result = memberController.logIn(new DeliMemberDto(memberId, memberPw));
-			if(result != null) {
+			if(result > 0) {
 				System.out.println("로그인 성공!");
 				break;
 			} else {
 				System.out.println("아이디나 비밀번호가 일치하지 않습니다.");
 			}
 		}
-		loggedIn(result);
+		loggedIn(memberId);
 	}
 	
-	private void loggedIn(DeliMemberDto result) {
+	private void loggedIn(String memberId) {
 		while(true) {
 			System.out.println();
 			System.out.println("======================================================");
-			System.out.println("\t\t**"+ result.getMemberName() + "님 환영합니다**");
+			System.out.println("\t\t**"+ memberId + "님 환영합니다**");
 			System.out.println("======================================================");
 			System.out.println("1. 주문하기");
 			System.out.println("2. 내 주문내역보기");
@@ -164,18 +165,20 @@ public class DeliveryMenu {
 			String menu = sc.nextLine();
 			
 			switch(menu) {
-			case "1" : insertOrder(); break;
-			case "2" : selectOrderList(); break;
-			case "3" : deleteOrder(); break;
-			case "4" : return;
+			case "1" : insertOrder(memberId); break;
+			case "2" : selectOrderList(memberId); break;
+			case "3" : deleteOrder(memberId); break;
+			case "4" : logOut(memberId); return;
 				default : System.out.println("해당하는 메뉴번호가 없습니다. 다시 입력해주세요.");
 			}
 		}
 	}
 	
-	private void insertOrder() {
-		System.out.print("아이디를 입력해주세요 >");
-		String memberId = sc.nextLine();
+	private void logOut(String memberId) {
+		
+	}
+	
+	private void insertOrder(String memberId) {
 		selectRestaurant();
 		int menuNo = 0;
 		int quantity = 0;
@@ -213,9 +216,7 @@ public class DeliveryMenu {
 		}
 	}
 	
-	private void selectOrderList() {
-		System.out.print("아이디를 입력해주세요 >");
-		String memberId = sc.nextLine();
+	private void selectOrderList(String memberId) {
 		List<OrderDto> orders = orderController.selectOrderList(memberId);
 		System.out.println("-------------------------------------------------------------------------------------------");
 		if(orders.isEmpty()) {
@@ -229,8 +230,8 @@ public class DeliveryMenu {
 		System.out.println("-------------------------------------------------------------------------------------------");
 	}
 	
-	private void deleteOrder() {
-		selectOrderList();
+	private void deleteOrder(String memberId) {
+		selectOrderList(memberId);
 		int orderNo = 0;
 		while(true) {
 			System.out.print("취소하고 싶으신 주문번호를 입력해주세요 >");

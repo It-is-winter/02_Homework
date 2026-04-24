@@ -3,9 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="memberMapper">
-  	<select id="validateId" resultType="int" parameterType="string">
+  	<select id="validateId" resultType="deliMember" parameterType="string">
   		SELECT 
-  		       COUNT(MEMBER_ID)
+  		       MEMBER_NO
   		  FROM 
   		       DELI_MEMBER
   		 WHERE 
@@ -31,30 +31,34 @@
   			 , #{address}
   			   )
   	</insert>
-  	<select id="logIn" resultType="deliMember" parameterType="deliMember">
+  	<select id="validateMember" resultType="deliMember" parameterType = "deliMember">
   		SELECT 
-  		       MEMBER_NO
-  		     , MEMBER_NAME
-  		  FROM 
-  		       DELI_MEMBER
-  		 WHERE 
-  		       MEMBER_NO = (
-  		       				SELECT 
-  		       				       MEMBER_NO
-  		       				  FROM 
-  		       				       DELI_MEMBER
-  		       				 WHERE 
-  		       				       MEMBER_ID = #{memberId}
-  		       				   AND 
-  		       				       MEMBER_PW = #{memberPw}
-  		       			   )
-  	</select>
-  	<select id="memberById" resultType="deliMember" parameterType="string">
-  		SELECT 
-  		       MEMBER_NO
+  			   MEMBER_NO
+  			 , MEMBER_NAME
   		  FROM 
   		       DELI_MEMBER
   		 WHERE 
   		       MEMBER_ID = #{memberId}
+  		   AND 
+  		       MEMBER_PW = #{memberPw}
   	</select>
+  	<insert id="logIn" parameterType="_int">
+  		INSERT 
+  		  INTO 
+  		       LOG_IN
+  		       (
+  		       MEMBER_NO
+  		       )
+  		VALUES 
+  		       (
+  		       #{memberNo}
+  		       )
+  	</insert>
+  	<delete id="logOut" parameterType="_int">
+  		DELETE 
+  		  FROM 
+  		       LOG_IN
+  		 WHERE 
+  		       MEMBER_NO = #{memberNo}
+  	</delete>
   </mapper>

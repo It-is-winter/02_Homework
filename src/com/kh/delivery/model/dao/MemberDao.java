@@ -7,11 +7,12 @@ import com.kh.delivery.model.dto.DeliMemberDto;
 public class MemberDao {
 	/**
 	 * Check memberId is already exist
+	 * This method can validate an memberId
 	 * @param session
 	 * @param memberId
 	 * @return
 	 */
-	public int validateId(SqlSession session, String memberId) {
+	public DeliMemberDto validateId(SqlSession session, String memberId) {
 		return session.selectOne("memberMapper.validateId", memberId);
 	}
 	
@@ -26,23 +27,33 @@ public class MemberDao {
 	}
 	
 	/**
-	 * Login succeeds if memberId and memberPw are correct
+	 * For find memberNo that correct memberId and memberPw
 	 * @param session
 	 * @param member
 	 * @return
 	 */
-	public DeliMemberDto logIn(SqlSession session, DeliMemberDto member) {
-		return session.selectOne("memberMapper.logIn", member);
+	public DeliMemberDto validateMember(SqlSession session, DeliMemberDto member) {
+		return session.selectOne("memberMapper.validateMember", member);
 	}
 	
 	/**
-	 * Find member by Id
+	 * Login succeeds if memberId and memberPw are correct
 	 * @param session
-	 * @param memberId
+	 * @param memberNo
 	 * @return
 	 */
-	public DeliMemberDto memberById(SqlSession session, String memberId) {
-		return session.selectOne("memberMapper.memberById", memberId);
+	public int logIn(SqlSession session, int memberNo) {
+		return session.insert("memberMapper.logIn", memberNo);
+	}
+	
+	/**
+	 * Log out
+	 * @param session
+	 * @param memberNo
+	 * @return
+	 */
+	public int logOut(SqlSession session, int memberNo) {
+		return session.delete("memberMapper.logOut", memberNo);
 	}
 
 }

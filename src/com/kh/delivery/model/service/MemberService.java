@@ -7,11 +7,11 @@ import com.kh.delivery.model.dao.MemberDao;
 import com.kh.delivery.model.dto.DeliMemberDto;
 
 public class MemberService {
-	public int validateId(String memberId) {
+	public DeliMemberDto validateId(String memberId) {
 		SqlSession session = Template.getSqlSession();
-		int result = new MemberDao().validateId(session, memberId);
+		DeliMemberDto member = new MemberDao().validateId(session, memberId);
 		session.close();
-		return result;
+		return member;
 	}
 	
 	public int signUp(DeliMemberDto member) {
@@ -26,9 +26,34 @@ public class MemberService {
 		return result;
 	}
 	
-	public DeliMemberDto logIn(DeliMemberDto member) {
+	public int logIn(DeliMemberDto member) {
 		SqlSession session = Template.getSqlSession();
-		DeliMemberDto result = new MemberDao().logIn(session, member);
+		DeliMemberDto md = new MemberDao().validateMember(session, member);
+		int result = 0;
+		if(md != null) {
+			result = new MemberDao().logIn(session, md.getMemberNo());
+		}
+		if(result > 0) {
+			session.commit();
+		} else {
+			session.rollback();
+		}
+		session.close();
+		return result;
+	}
+	
+	public int logOut(String memberId) {
+		SqlSession session = Template.getSqlSession();
+		DeliMemberDto member = new MemberDao().validateId(session, memberId);
+		int result = 0;
+		if(member != null) {
+			result = new MemberDao().logOut(session, member.getMemberNo());
+		}
+		if(result > 0) {
+			session.commit();
+		} else {
+			session.rollback();
+		}
 		session.close();
 		return result;
 	}

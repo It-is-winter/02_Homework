@@ -15,7 +15,7 @@ public class OrderService {
 		char isSoldOut = new OrderDao().isSoldOutByMenuNo(session, order.getMenuNo()).getSoldOut();
 		int result = 0;
 		if(isSoldOut != 'Y') {
-			int memberNo = new MemberDao().memberById(session, memberId).getMemberNo();
+			int memberNo = new MemberDao().validateId(session, memberId).getMemberNo();
 			order.setMemberNo(memberNo);
 			result = new OrderDao().insertOrder(session, order);
 		}
@@ -30,7 +30,7 @@ public class OrderService {
 	
 	public List<OrderDto> selectOrderList(String memberId) {
 		SqlSession session = Template.getSqlSession();
-		int memberNo = new MemberDao().memberById(session, memberId).getMemberNo();
+		int memberNo = new MemberDao().validateId(session, memberId).getMemberNo();
 		List<OrderDto> orders = new OrderDao().selectOrderList(session, memberNo);
 		session.close();
 		return orders;
