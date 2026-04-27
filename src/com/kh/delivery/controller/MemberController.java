@@ -15,5 +15,9 @@ public class MemberController {
 	public int logIn(DeliMemberDto member) {
 		return new MemberService().logIn(member);
 	}
+	
+	public int logOut(String memberId) {
+		return new MemberService().logOut(memberId);
+	}
 
 }

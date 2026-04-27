@@ -132,10 +132,9 @@ public class DeliveryMenu {
 		System.out.println("\t\t\t로그인서비스입니다.");
 		System.out.println("=====================================================================");
 		int result = 0;
-		String memberId = "";
 		while(true) {
 			System.out.print("아이디를 입력해주세요 >");
-			memberId = sc.nextLine();
+			String memberId = sc.nextLine();
 			System.out.print("비밀번호를 입력해주세요 >");
 			String memberPw = sc.nextLine();
 			
@@ -175,6 +174,7 @@ public class DeliveryMenu {
 	}
 	
 	private void logOut(String memberId) {
+		int result = memberController.logOut(memberId);
 		
 	}
 	
