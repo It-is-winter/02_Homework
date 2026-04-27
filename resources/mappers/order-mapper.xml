@@ -12,7 +12,7 @@
   		 WHERE 
   		       MENU_NO = #{menuNo}
   	</select>
-  	<insert id="insertOrder">
+  	<insert id="insertOrder" parameterType="order">
   		INSERT 
   		  INTO 
   		       ORDERS

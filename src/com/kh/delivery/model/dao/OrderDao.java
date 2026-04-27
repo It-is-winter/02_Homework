@@ -9,16 +9,6 @@ import com.kh.delivery.model.dto.OrderDto;
 
 public class OrderDao {
 	/**
-	 * Insert new Order when menu is not sold_out
-	 * @param session
-	 * @param order
-	 * @return
-	 */
-	public int insertOrder(SqlSession session, OrderDto order) {
-		return session.insert("orderMapper.insertOrder", order);
-	}
-	
-	/**
 	 * Validate that menu's SOLD_OUT value is 'Y' or 'N'
 	 * @param session
 	 * @param menuNo
@@ -26,6 +16,16 @@ public class OrderDao {
 	 */
 	public MenuDto isSoldOutByMenuNo(SqlSession session, int menuNo) {
 		return session.selectOne("orderMapper.isSoldOutByMenuNo", menuNo);
+	}
+	
+	/**
+	 * Insert new Order when menu is not sold_out
+	 * @param session
+	 * @param order
+	 * @return
+	 */
+	public int insertOrder(SqlSession session, OrderDto order) {
+		return session.insert("orderMapper.insertOrder", order);
 	}
 	
 	/**
